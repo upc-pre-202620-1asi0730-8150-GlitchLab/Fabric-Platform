@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FabricPlatform.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("0.0.1.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("0.0.1+d772d0c7b14100f17581f83cba9c33cf782a6b1b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("0.0.1+32714cdee424ec4d73ce8d255d5210fc27d30210")]
 [assembly: System.Reflection.AssemblyProductAttribute("FabricPlatform.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FabricPlatform.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("0.0.1.0")]
