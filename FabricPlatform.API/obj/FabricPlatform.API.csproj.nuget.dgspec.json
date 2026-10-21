@@ -1,31 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\VICTUS2203\\upc-pre-202620-fabrizio-proyectos-jetbrains\\fabric-platform\\FabricPlatform.API\\FabricPlatform.API.csproj": {}
+    "/Users/alumnos/RiderProjects/Fabric-Platform/FabricPlatform.API/FabricPlatform.API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\VICTUS2203\\upc-pre-202620-fabrizio-proyectos-jetbrains\\fabric-platform\\FabricPlatform.API\\FabricPlatform.API.csproj": {
+    "/Users/alumnos/RiderProjects/Fabric-Platform/FabricPlatform.API/FabricPlatform.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\VICTUS2203\\upc-pre-202620-fabrizio-proyectos-jetbrains\\fabric-platform\\FabricPlatform.API\\FabricPlatform.API.csproj",
+        "projectUniqueName": "/Users/alumnos/RiderProjects/Fabric-Platform/FabricPlatform.API/FabricPlatform.API.csproj",
         "projectName": "FabricPlatform.API",
-        "projectPath": "C:\\Users\\VICTUS2203\\upc-pre-202620-fabrizio-proyectos-jetbrains\\fabric-platform\\FabricPlatform.API\\FabricPlatform.API.csproj",
-        "packagesPath": "C:\\Users\\VICTUS2203\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\VICTUS2203\\upc-pre-202620-fabrizio-proyectos-jetbrains\\fabric-platform\\FabricPlatform.API\\obj\\",
+        "projectPath": "/Users/alumnos/RiderProjects/Fabric-Platform/FabricPlatform.API/FabricPlatform.API.csproj",
+        "packagesPath": "/Users/alumnos/.nuget/packages/",
+        "outputPath": "/Users/alumnos/RiderProjects/Fabric-Platform/FabricPlatform.API/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\VICTUS2203\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/alumnos/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "/usr/local/share/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -45,7 +40,7 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.200"
+        "SdkAnalysisLevel": "10.0.400"
       },
       "frameworks": {
         "net10.0": {
@@ -76,7 +71,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Users\\VICTUS2203\\.dotnet\\sdk\\10.0.201/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.400/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.AspNetCore": "(,10.0.32767]",
             "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",
