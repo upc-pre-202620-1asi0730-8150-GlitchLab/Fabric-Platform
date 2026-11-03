@@ -3,29 +3,29 @@
     <PropertyGroup>
         <TargetFramework>net10.0</TargetFramework>
         <Nullable>enable</Nullable>
-        <LangVersion>14.0</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Version>0.0.1</Version>
+        <InvariantGlobalization>false</InvariantGlobalization>
+        <LangVersion>14</LangVersion>
+        <Version>1.1.0</Version>
     </PropertyGroup>
 
     <ItemGroup>
-        <!-- Asp.Net Core related packages -->
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.13"/>
-        <PackageReference Include="Scalar.AspNetCore" Version="2.18.0"/>
-        <!-- Entity Framework Core related packages -->
-        <PackageReference Include="EntityFrameworkCore" Version="10.0.13"/>
-        <PackageReference Include="EntityFrameworkCore.Relational" Version="10.0.13"/>
-        <PackageReference Include="EntityFrameworkCore.Design" Version="10.0.13">
-        <PrivateAssets>all</PrivateAssets>
-        <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+        <!-- EntityFrameworkCore Database Persistence related packages -->
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.14" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.14" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.14">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-
-        <!-- MySQL Entity Framework Core provider -->
-        <PackageReference Include="MySql.EntityFrameworkCore" Version="10.0.9"/>
+        <!-- MySQL Database Persistence related packages -->
+        <PackageReference Include="MySql.EntityFrameworkCore" Version="10.0.12" />
         <!-- Naming convention conversion related packages -->
-        <PackageReference Include="Humanizer" Version="3.0.10"/>
-        <!-- CQRS / mediator related packages -->
-        <PackageReference Include="Cortex.Mediator" Version="3.1.2"/>
+        <PackageReference Include="Humanizer" Version="3.0.10" />
+        <!-- OpenAPI documentation related packages -->
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.14" />
+        <PackageReference Include="Scalar.AspNetCore" Version="2.18.7" />
+        <!-- Mediator pattern related packages -->
+        <PackageReference Include="Cortex.Mediator" Version="3.1.2" />
     </ItemGroup>
 
 </Project>
