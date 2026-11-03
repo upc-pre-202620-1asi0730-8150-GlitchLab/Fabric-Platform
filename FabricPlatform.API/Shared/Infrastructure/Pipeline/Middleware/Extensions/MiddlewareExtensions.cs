@@ -1,4 +1,6 @@
+using System;
 using FabricPlatform.API.Shared.Infrastructure.Pipeline.Middleware.Components;
+using Microsoft.AspNetCore.Builder;
 
 namespace FabricPlatform.API.Shared.Infrastructure.Pipeline.Middleware.Extensions;
 
