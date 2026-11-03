@@ -1,3 +1,7 @@
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+
 namespace FabricPlatform.API.Shared.Domain.Repositories;
 
 public interface IBaseRepository<TEntity>

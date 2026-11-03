@@ -1,3 +1,4 @@
+using System.Linq;
 using FabricPlatform.API.Shared.Infrastructure.Interfaces.AspNetCore.Configuration.Extensions;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
