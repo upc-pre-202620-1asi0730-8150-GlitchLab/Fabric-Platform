@@ -24,6 +24,8 @@
         <PackageReference Include="MySql.EntityFrameworkCore" Version="10.0.9"/>
         <!-- Naming convention conversion related packages -->
         <PackageReference Include="Humanizer" Version="3.0.10"/>
+        <!-- CQRS / mediator related packages -->
+        <PackageReference Include="Cortex.Mediator" Version="3.1.2"/>
     </ItemGroup>
 
 </Project>
