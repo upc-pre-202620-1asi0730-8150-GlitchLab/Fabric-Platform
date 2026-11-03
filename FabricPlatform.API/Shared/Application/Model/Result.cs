@@ -1,3 +1,5 @@
+using System;
+
 namespace FabricPlatform.API.Shared.Application.Model;
 
 using DomainErrorModel = FabricPlatform.API.Shared.Domain.Model.Errors.Error;
