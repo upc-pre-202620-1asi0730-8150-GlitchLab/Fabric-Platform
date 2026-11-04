@@ -1,6 +1,9 @@
 namespace FabricPlatform.API.Batches.Domain.Model.ValueObjects;
 
-public class BatchStatus
+public enum BatchStatus
 {
-    
+    InProduction,
+    Completed,
+    AtRisk,
+    Cancelled
 }

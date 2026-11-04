@@ -1,6 +1,6 @@
+using FabricPlatform.API.Shared.Domain.Model.Events;
+using FabricPlatform.API.Batches.Domain.Model.Aggregates;
+
 namespace FabricPlatform.API.Batches.Domain.Model.Events;
 
-public class BatchCreatedEvent
-{
-    
-}
+public record BatchCreatedEvent(Batch Batch) : IEvent;
