@@ -1,6 +1,10 @@
 namespace FabricPlatform.API.Batches.Domain.Model.Commands;
 
-public class AssignOperatorToBatchCommand
+public record AssignOperatorToBatchCommand
 {
-    
+    int BatchId;
+    int OperatorId;
+    string FullName;
+    string Specialty;
+    string Stage;
 }
