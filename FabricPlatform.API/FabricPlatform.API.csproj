@@ -28,4 +28,11 @@
         <PackageReference Include="Cortex.Mediator" Version="3.1.2"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Quality\Application\" />
+      <Folder Include="Quality\Domain\Model\Repositories\" />
+      <Folder Include="Quality\Infrastructure\" />
+      <Folder Include="Quality\Interfaces\" />
+    </ItemGroup>
+
 </Project>
