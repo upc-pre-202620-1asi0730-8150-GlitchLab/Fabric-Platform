@@ -5,8 +5,8 @@ using FabricPlatform.API.Alerts.Domain.Repositories;
 
 namespace FabricPlatform.API.Alerts.Application.Internal.QueryServices;
 
-public class AlertQueryService(IAlertRepository alertRepository)
-    : IAlertQueryService
+public class AlertQueryService(
+    IAlertRepository alertRepository) : IAlertQueryService
 {
     public async Task<IEnumerable<Alert>> Handle(
         GetAllAlertsQuery query,
