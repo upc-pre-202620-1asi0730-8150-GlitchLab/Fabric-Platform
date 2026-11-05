@@ -13,24 +13,23 @@ builder.Services.AddControllers();
 // OpenAPI
 builder.Services.AddOpenApi();
 
-// Database Configuration
-builder.Services.AddDbContext<AppDbContext>((serviceProvider, options) =>
+// Database
+var connectionString = builder.Configuration
+    .GetConnectionString("DefaultConnection");
+
+if (string.IsNullOrWhiteSpace(connectionString))
 {
-    var connectionString = builder.Configuration
-        .GetConnectionString("DefaultConnection");
+    throw new InvalidOperationException(
+        "DefaultConnection is not configured.");
+}
 
-    if (string.IsNullOrWhiteSpace(connectionString))
-    {
-        throw new InvalidOperationException(
-            "Database connection string is not configured.");
-    }
-
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
     options.UseMySQL(connectionString);
 });
 
-// Alerts - Dependency Injection
+// Alerts
 builder.Services.AddScoped<IAlertRepository, AlertRepository>();
-
 builder.Services.AddScoped<IAlertQueryService, AlertQueryService>();
 
 // CORS
@@ -38,7 +37,8 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("FabricWebApplication", policy =>
     {
-        policy.WithOrigins("http://localhost:5173")
+        policy
+            .WithOrigins("http://localhost:5173")
             .AllowAnyHeader()
             .AllowAnyMethod();
     });
@@ -52,7 +52,6 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-// HTTP Pipeline
 app.UseHttpsRedirection();
 
 app.UseCors("FabricWebApplication");
