@@ -8,14 +8,16 @@ using Microsoft.AspNetCore.Mvc;
 namespace FabricPlatform.API.Alerts.Interfaces.Rest;
 
 [ApiController]
-[Route("api/v1/[controller]")]
+[Route("api/v1/alerts")]
 [Produces(MediaTypeNames.Application.Json)]
 [Tags("Alerts")]
 public class AlertsController(
     IAlertQueryService alertQueryService) : ControllerBase
 {
     [HttpGet]
-    [ProducesResponseType(typeof(IEnumerable<AlertResource>), StatusCodes.Status200OK)]
+    [ProducesResponseType(
+        typeof(IEnumerable<AlertResource>),
+        StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAllAlerts(
         CancellationToken cancellationToken)
     {
