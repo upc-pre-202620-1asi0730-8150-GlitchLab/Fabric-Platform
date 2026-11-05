@@ -1,4 +1,5 @@
 using FabricPlatform.API.Batches.Domain.Model.Events;
+using FabricPlatform.API.Batches.Domain.Model.Entities;
 using FabricPlatform.API.Batches.Domain.Model.ValueObjects;
 using FabricPlatform.API.Shared.Domain.Model.Aggregates.Internal;
 
@@ -12,6 +13,18 @@ public class Batch : AggregateRoot
     public int ProjectedQuantity { get; private set; }
     public DateTimeOffset DeliveryDate { get; private set; }
     
+    private readonly List<BatchStage> _stages = new();
+    public IReadOnlyCollection<BatchStage> Stages => _stages.AsReadOnly();
+    
+    private readonly List<BatchOperator> _operators = new();
+    public IReadOnlyCollection<BatchOperator> Operators => _operators.AsReadOnly();
+    
+    private readonly List<BatchMovement> _movements = new();
+    public IReadOnlyCollection<BatchMovement> Movements => _movements.AsReadOnly();
+    
+    private readonly List<BatchObservation> _observations = new();
+    public IReadOnlyCollection<BatchObservation> Observations => _observations.AsReadOnly();
+    
     protected Batch() { }
     
     public Batch( BatchCode code, int projectedQuantity, DateTimeOffset deliveryDate)
@@ -24,5 +37,22 @@ public class Batch : AggregateRoot
         Status = BatchStatus.InProduction;
         
         AddDomainEvent(new BatchCreatedEvent(this));
+    }
+    
+    public void AddStage(StageName name, int order, int targetQuantity)
+    {
+        _stages.Add(new BatchStage(Id, name, order, targetQuantity));
+    }
+    public void AssignOperator(int operatorId, string fullName, string speciality, StageName assignedStage, DateTimeOffset assignmentDate)
+    {
+        _operators.Add(new BatchOperator(Id, operatorId, fullName, speciality, assignedStage, assignmentDate));
+    }
+    public void AddMovement(StageName stageName, int qtyIn, int qtyOut, string responsiblePerson, DateTimeOffset timestamp)
+    {
+        _movements.Add(new BatchMovement(Id, stageName, qtyIn, qtyOut, responsiblePerson, timestamp));
+    }
+    public void AddObservation(string authorName, string category, string content, DateTimeOffset createdAt)
+    {
+        _observations.Add(new BatchObservation(Id, authorName, category, content, createdAt));
     }
 }
