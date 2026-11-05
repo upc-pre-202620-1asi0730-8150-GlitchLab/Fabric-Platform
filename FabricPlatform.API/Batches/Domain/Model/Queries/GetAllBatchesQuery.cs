@@ -1,6 +1,3 @@
 namespace FabricPlatform.API.Batches.Domain.Model.Queries;
 
-public class GetAllBatchesQuery
-{
-    
-}
+public record GetAllBatchesQuery();
