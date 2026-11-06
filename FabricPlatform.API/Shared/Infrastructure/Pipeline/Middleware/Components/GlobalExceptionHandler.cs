@@ -18,7 +18,6 @@ public class GlobalExceptionHandler(
     IStringLocalizer<CommonMessages> commonLocalizer)
     : IExceptionHandler
 {
-
     public async ValueTask<bool> TryHandleAsync(
         HttpContext httpContext,
         Exception exception,
