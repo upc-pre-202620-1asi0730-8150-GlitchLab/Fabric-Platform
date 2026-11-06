@@ -24,17 +24,13 @@ using ProblemDetailsFactory = FabricPlatform.API.Shared.Interfaces.Rest.ProblemD
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddControllers(options => options.Conventions.Add(new KebabCaseRouteNamingConvention()))
     .AddDataAnnotationsLocalization();
 
-// Add ProblemDetails and ExceptionHandler services
 builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
-// Add CORS Policy
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAllPolicy",
@@ -43,9 +39,6 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader());
 });
 
-// Add Database Connection
-
-// Configure Database Context and route EF logs through the app logger pipeline.
 builder.Services.AddDbContext<AppDbContext>((serviceProvider, options) =>
 {
     var connectionStringTemplate = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -65,49 +58,36 @@ builder.Services.AddDbContext<AppDbContext>((serviceProvider, options) =>
         options.EnableSensitiveDataLogging();
 });
 
-// Localization: resources are embedded next to their marker classes (ErrorMessages, CommonMessages, ...)
 builder.Services.AddLocalization();
 
-// Explicitly register IStringLocalizer for ErrorMessages, CommonMessages and Bounded Context messages
 builder.Services.AddSingleton<IStringLocalizer<ErrorMessages>, StringLocalizer<ErrorMessages>>();
 builder.Services.AddSingleton<IStringLocalizer<CommonMessages>, StringLocalizer<CommonMessages>>();
 builder.Services.AddSingleton<IStringLocalizer<MachineryMessage>, StringLocalizer<MachineryMessage>>();
 
-// Register the custom ProblemDetailsFactory
 builder.Services.AddSingleton<ProblemDetailsFactory>();
 
-// OpenAPI / Scalar documentation
 builder.Services.AddOpenApi(options =>
 {
     options.AddDocumentTransformer<BearerSecuritySchemeTransformer>();
     options.AddOperationTransformer<IamBearerSecurityOperationTransformer>();
 });
 
-// Dependency Injection
-
-// Shared Bounded Context
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<DispatchDomainEventsInterceptor>();
 
-// Machinery Bounded Context
 builder.Services.AddScoped<IMachineRepository, MachineRepository>();
 builder.Services.AddScoped<IMachineCommandService, MachineCommandService>();
 builder.Services.AddScoped<IMachineQueryService, MachineQueryService>();
 
-// Mediator Configuration
-
-// Add Mediator Injection Configuration
 builder.Services.AddScoped(typeof(ICommandPipelineBehavior<>), typeof(LoggingCommandBehavior<>));
 builder.Services.AddScoped(typeof(ICommandPipelineBehavior<>), typeof(ExceptionHandlingCommandBehavior<>));
 builder.Services.AddScoped(typeof(ICommandPipelineBehavior<>), typeof(TransactionCommandBehavior<>));
 
-// Add Cortex Mediator for Event Handling
 builder.Services.AddCortexMediator(
     [typeof(Program)]);
 
 var app = builder.Build();
 
-// Apply pending migrations on startup (safe to call even when schema is up to date)
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -115,7 +95,6 @@ using (var scope = app.Services.CreateScope())
     context.Database.Migrate();
 }
 
-// Configure the HTTP request pipeline.
 app.UseExceptionHandler();
 
 var supportedCultures = new[] { "en", "es" };
@@ -132,7 +111,6 @@ if (app.Environment.IsDevelopment())
     app.MapScalarApiReference();
 }
 
-// Apply CORS Policy
 app.UseCors("AllowAllPolicy");
 
 app.UseHttpsRedirection();
