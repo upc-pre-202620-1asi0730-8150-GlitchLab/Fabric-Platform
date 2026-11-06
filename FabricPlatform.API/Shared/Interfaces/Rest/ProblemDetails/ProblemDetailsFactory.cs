@@ -9,29 +9,29 @@ namespace FabricPlatform.API.Shared.Interfaces.Rest.ProblemDetails;
 public class ProblemDetailsFactory
 {
     private readonly Microsoft.AspNetCore.Mvc.Infrastructure.ProblemDetailsFactory
-        _aspNetCoreProblemDetailsFactory; 
+        _aspNetCoreProblemDetailsFactory;
 
-    private readonly IStringLocalizer<CommonMessages> _commonLocalizer; 
+    private readonly IStringLocalizer<CommonMessages> _commonLocalizer;
     private readonly IStringLocalizer<ErrorMessages> _errorLocalizer;
 
     public ProblemDetailsFactory(
         IStringLocalizer<ErrorMessages> errorLocalizer,
-        IStringLocalizer<CommonMessages> commonLocalizer, 
+        IStringLocalizer<CommonMessages> commonLocalizer,
         Microsoft.AspNetCore.Mvc.Infrastructure.ProblemDetailsFactory
-            aspNetCoreProblemDetailsFactory) 
+            aspNetCoreProblemDetailsFactory)
     {
         _errorLocalizer = errorLocalizer;
         _commonLocalizer = commonLocalizer;
-        _aspNetCoreProblemDetailsFactory = aspNetCoreProblemDetailsFactory; 
+        _aspNetCoreProblemDetailsFactory = aspNetCoreProblemDetailsFactory;
     }
 
     public IActionResult CreateProblemDetails(
         ControllerBase controller,
         int statusCode,
-        Enum? errorEnum, 
-        string detailMessage) 
+        Enum? errorEnum,
+        string detailMessage)
     {
-        var problemDetails = _aspNetCoreProblemDetailsFactory.CreateProblemDetails( 
+        var problemDetails = _aspNetCoreProblemDetailsFactory.CreateProblemDetails(
             controller.HttpContext,
             statusCode,
             errorEnum != null ? _errorLocalizer[$"{errorEnum}"] : _commonLocalizer["GenericError"],
@@ -62,11 +62,11 @@ public class ProblemDetailsFactory
     public IActionResult CreateProblemDetails(
         ControllerBase controller,
         int statusCode,
-        string titleKey, 
+        string titleKey,
         string detailKey,
         params object[] detailArgs)
     {
-        var problemDetails = _aspNetCoreProblemDetailsFactory.CreateProblemDetails( // Corrected usage
+        var problemDetails = _aspNetCoreProblemDetailsFactory.CreateProblemDetails(
             controller.HttpContext,
             statusCode,
             _commonLocalizer[titleKey],
