@@ -19,7 +19,7 @@ public static class ModelBuilderExtensions
                 var keyName = key.GetName();
                 if (!string.IsNullOrEmpty(keyName)) key.SetName(keyName.ToSnakeCase());
             }
-            
+
             foreach (var foreignKey in entity.GetForeignKeys())
             {
                 var foreignKeyName = foreignKey.GetConstraintName();
