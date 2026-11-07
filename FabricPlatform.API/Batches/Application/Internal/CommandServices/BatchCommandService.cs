@@ -9,7 +9,7 @@ using FabricPlatform.API.Shared.Application.Model;
 
 namespace FabricPlatform.API.Batches.Application.Internal.CommandServices;
 
-public class BatchCommandService : ICreateBatchCommandService, IAssignOperatorToBatchCommandService
+public class BatchCommandService : ICreateBatchCommandService, IAssignOperatorToBatchCommandService, IUpdateBatchStageCommandService
 {
     private readonly IBatchRepository _batchRepository;
     private readonly IUnitOfWork _unitOfWork;
@@ -52,6 +52,25 @@ public class BatchCommandService : ICreateBatchCommandService, IAssignOperatorTo
         var stageName = new StageName(command.Stage);
         batch.AssignOperator(command.OperatorId, command.FullName, command.Specialty, stageName, DateTimeOffset.UtcNow);
 
+        _batchRepository.Update(batch);
+        await _unitOfWork.CompleteAsync(cancellationToken);
+
+        return Result<bool>.Success(true);
+    }
+    
+    public async Task<Result<bool>> HandleAsync(UpdateBatchStageCommand command, CancellationToken cancellationToken = default)
+    {
+        var batchId = new BatchId(command.BatchId);
+        var batch = await _batchRepository.FindByIdAsync(batchId, cancellationToken);
+
+        if (batch == null)
+        {
+            return Result<bool>.Failure(BatchErrors.NotFound);
+        }
+        
+        var newStageName = new StageName(command.NewStage);
+        batch.UpdateStage(newStageName, command.ProcessedQuantity);
+        
         _batchRepository.Update(batch);
         await _unitOfWork.CompleteAsync(cancellationToken);
 

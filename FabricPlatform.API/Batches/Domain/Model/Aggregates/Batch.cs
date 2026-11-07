@@ -55,4 +55,17 @@ public class Batch : AggregateRoot
     {
         _observations.Add(new BatchObservation(Id, authorName, category, content, createdAt));
     }
+    public void UpdateStage(StageName newStageName, int processedQuantity)
+    {
+        var stage = _stages.FirstOrDefault(s => s.Name.Value == newStageName.Value);
+        
+        if (stage == null)
+        {
+            throw new InvalidOperationException($"The stage '{newStageName.Value}' does not exist for this batch.");
+        }
+        
+        stage.UpdateProgress(processedQuantity);
+        
+        AddDomainEvent(new BatchStageUpdatedEvent(Id, newStageName));
+    }
 }

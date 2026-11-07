@@ -1,8 +1,8 @@
 namespace FabricPlatform.API.Batches.Domain.Model.Commands;
 
-public class UpdateBatchStageCommand
+public record UpdateBatchStageCommand
 {
-    int BatchId { get; set; }
-    string NewStage { get; set; }
-    int ProcessedQuantity { get; set; }
+    public int BatchId { get; set; }
+    public string NewStage { get; set; } = string.Empty;
+    public int ProcessedQuantity { get; set; }
 }

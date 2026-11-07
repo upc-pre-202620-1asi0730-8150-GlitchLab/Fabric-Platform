@@ -1,6 +1,9 @@
+using FabricPlatform.API.Batches.Domain.Model.Commands;
+using FabricPlatform.API.Shared.Application.Model;
+
 namespace FabricPlatform.API.Batches.Application.CommandServices;
 
-public class IUpdateBatchStageCommandService
+public interface IUpdateBatchStageCommandService
 {
-    
+    Task<Result<bool>> HandleAsync(UpdateBatchStageCommand command, CancellationToken cancellationToken = default);
 }
