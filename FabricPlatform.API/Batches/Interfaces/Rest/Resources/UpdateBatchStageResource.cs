@@ -1,6 +1,6 @@
 namespace FabricPlatform.API.Batches.Interfaces.Rest.Resources;
 
-public class UpdateBatchStageResource
-{
-    
-}
+public record UpdateBatchStageResource(
+    string NewStage,
+    int ProcessedQuantity
+);
