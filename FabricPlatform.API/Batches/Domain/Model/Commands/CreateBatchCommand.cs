@@ -2,7 +2,7 @@ namespace FabricPlatform.API.Batches.Domain.Model.Commands;
 
 public record CreateBatchCommand
 {
-    string Code;
-    int ProjectedQuantity;
-    DateTimeOffset DeliveryDate;
+    public string Code { get; init; } = string.Empty;
+    public int ProjectedQuantity { get; init; }
+    public DateTimeOffset DeliveryDate { get; init; }
 }
