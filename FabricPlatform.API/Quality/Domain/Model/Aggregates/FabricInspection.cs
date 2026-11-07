@@ -9,29 +9,44 @@ using FabricPlatform.API.Shared.Domain.Model.Entities;
 public class FabricInspection : AggregateRoot, IAuditableEntity
 {
     private readonly List<InspectionParameterRecord> _parameterHistory = [];
+    private readonly List<ShrinkageTestRecord> _testHistory = [];
 
     public FabricInspectionId Id { get; private set; }
     public string RollId { get; private set; } = string.Empty;
     public string Supplier { get; private set; } = string.Empty;
     public string InspectionDate { get; private set; } = string.Empty;
     public string Sample { get; private set; } = string.Empty;
+    public string Color { get; private set; } = "Navy";
     public string InitialResult { get; private set; } = "Conforming";
-    
+    public string RollStatus { get; private set; } = "Available for Cutting";
+    public string ShrinkageTest { get; private set; } = "Pending";
+
     public InspectionParameters? Parameters { get; private set; }
     public IReadOnlyCollection<InspectionParameterRecord> ParameterHistory => _parameterHistory.AsReadOnly();
+    public IReadOnlyCollection<ShrinkageTestRecord> TestHistory => _testHistory.AsReadOnly();
 
     public DateTimeOffset? CreatedAt { get; set; }
     public DateTimeOffset? UpdatedAt { get; set; }
 
     protected FabricInspection() { }
 
-    public FabricInspection(string rollId, string supplier, string inspectionDate, string sample, string initialResult)
+    public FabricInspection(
+        string rollId,
+        string supplier,
+        string inspectionDate,
+        string sample,
+        string color = "Navy",
+        string initialResult = "Conforming",
+        string rollStatus = "Available for Cutting")
     {
         RollId = rollId;
         Supplier = supplier;
         InspectionDate = inspectionDate;
         Sample = sample;
+        Color = color;
         InitialResult = initialResult;
+        RollStatus = rollStatus;
+        ShrinkageTest = "Pending";
     }
 
     public void UpdateParameters(
@@ -58,6 +73,24 @@ public class FabricInspection : AggregateRoot, IAuditableEntity
         {
             _parameterHistory.Clear();
             _parameterHistory.AddRange(history);
+        }
+    }
+
+    public void UpdateShrinkageTest(
+        string shrinkageResult,
+        IEnumerable<ShrinkageTestRecord>? tests = null)
+    {
+        ShrinkageTest = shrinkageResult;
+
+        if (tests != null)
+        {
+            _testHistory.Clear();
+            _testHistory.AddRange(tests);
+        }
+
+        if (shrinkageResult.Equals("Non-Compliant", StringComparison.OrdinalIgnoreCase))
+        {
+            RollStatus = "Blocked / Under Review";
         }
     }
 }
