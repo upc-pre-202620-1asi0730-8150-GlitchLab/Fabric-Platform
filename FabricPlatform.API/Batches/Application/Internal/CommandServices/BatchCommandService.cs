@@ -9,7 +9,7 @@ using FabricPlatform.API.Shared.Application.Model;
 
 namespace FabricPlatform.API.Batches.Application.Internal.CommandServices;
 
-public class BatchCommandService : ICreateBatchCommandService
+public class BatchCommandService : ICreateBatchCommandService, IAssignOperatorToBatchCommandService
 {
     private readonly IBatchRepository _batchRepository;
     private readonly IUnitOfWork _unitOfWork;
@@ -22,26 +22,39 @@ public class BatchCommandService : ICreateBatchCommandService
 
     public async Task<Result<int>> HandleAsync(CreateBatchCommand command, CancellationToken cancellationToken = default)
     {
-        // 1. Validar e instanciar el objeto de valor del Dominio
         var batchCode = new BatchCode(command.Code);
 
-        // 2. Verificar la regla de negocio de unicidad mediante el repositorio
         var existingBatch = await _batchRepository.FindByCodeAsync(batchCode, cancellationToken);
         if (existingBatch != null)
         {
             return Result<int>.Failure(BatchErrors.CodeAlreadyExists);
         }
 
-        // 3. Instanciar la Raíz del Agregado (lo cual dispara internamente el Evento de Dominio)
         var batch = new Batch(batchCode, command.ProjectedQuantity, command.DeliveryDate);
 
-        // 4. Registrar la entidad en el repositorio
         await _batchRepository.AddAsync(batch, cancellationToken);
 
-        // 5. Confirmar la transacción a través de la UnitOfWork (lo que activa el Interceptor Observer)
         await _unitOfWork.CompleteAsync(cancellationToken);
 
-        // 6. Retornar el ID exitoso
         return Result<int>.Success(batch.Id.Value);
+    }
+
+    public async Task<Result<bool>> HandleAsync(AssignOperatorToBatchCommand command, CancellationToken cancellationToken = default)
+    {
+        var batchId = new BatchId(command.BatchId);
+        var batch = await _batchRepository.FindByIdAsync(batchId, cancellationToken);
+
+        if (batch == null)
+        {
+            return Result<bool>.Failure(BatchErrors.NotFound);
+        }
+
+        var stageName = new StageName(command.Stage);
+        batch.AssignOperator(command.OperatorId, command.FullName, command.Specialty, stageName, DateTimeOffset.UtcNow);
+
+        _batchRepository.Update(batch);
+        await _unitOfWork.CompleteAsync(cancellationToken);
+
+        return Result<bool>.Success(true);
     }
 }
