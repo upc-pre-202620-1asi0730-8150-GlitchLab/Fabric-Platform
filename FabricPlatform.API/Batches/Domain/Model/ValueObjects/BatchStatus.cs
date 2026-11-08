@@ -5,5 +5,5 @@ public enum BatchStatus
     InProduction,
     Completed,
     AtRisk,
-    Cancelled
+    Delayed
 }

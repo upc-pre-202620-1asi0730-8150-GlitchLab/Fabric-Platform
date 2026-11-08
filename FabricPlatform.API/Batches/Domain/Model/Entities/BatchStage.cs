@@ -26,13 +26,25 @@ public class BatchStage
     public void UpdateProgress(int processedQuantity)
     {
         ProcessedQuantity = processedQuantity;
-        if (ProcessedQuantity >= TargetQuantity)
+        UpdateStatus();
+    }
+
+    public void UpdateTargetQuantity(int targetQuantity)
+    {
+        if (targetQuantity <= 0)
         {
-            Status = "Completed";
+            throw new ArgumentOutOfRangeException(nameof(targetQuantity));
         }
-        else if (ProcessedQuantity > 0)
-        {
-            Status = "In Progress";
-        }
+
+        TargetQuantity = targetQuantity;
+    }
+
+    private void UpdateStatus()
+    {
+        Status = ProcessedQuantity >= TargetQuantity
+            ? "Completed"
+            : ProcessedQuantity > 0
+                ? "In Progress"
+                : "Pending";
     }
 }
