@@ -1,5 +1,6 @@
 namespace FabricPlatform.API.Quality.Infrastructure.Persistence.EntityFrameworkCore.Configuration;
 
+using System;
 using FabricPlatform.API.Quality.Domain.Model.Aggregates;
 using FabricPlatform.API.Quality.Domain.Model.ValueObjects;
 using FabricPlatform.API.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration.ValueConverters;
@@ -25,5 +26,15 @@ public class DefectConfiguration : IEntityTypeConfiguration<Defect>
         builder.Property(x => x.Disposition).HasMaxLength(50);
         builder.Property(x => x.CorrectionType).HasMaxLength(50);
         builder.Property(x => x.Date).HasMaxLength(35);
+
+        builder.Property(x => x.CreatedAt)
+            .HasConversion(
+                v => v.HasValue ? v.Value.UtcDateTime : (DateTime?)null,
+                v => v.HasValue ? new DateTimeOffset(v.Value, TimeSpan.Zero) : null);
+
+        builder.Property(x => x.UpdatedAt)
+            .HasConversion(
+                v => v.HasValue ? v.Value.UtcDateTime : (DateTime?)null,
+                v => v.HasValue ? new DateTimeOffset(v.Value, TimeSpan.Zero) : null);
     }
 }
