@@ -10,25 +10,25 @@
 
     <ItemGroup>
         <!-- ASP.NET Core related packages -->
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.13"/>
-        <PackageReference Include="Scalar.AspNetCore" Version="2.18.0"/>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.13" />
+        <PackageReference Include="Scalar.AspNetCore" Version="2.19.0" />
 
         <!-- Entity Framework Core related packages -->
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.13"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.13"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.13" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.13" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.13">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
 
         <!-- MySQL Entity Framework Core provider -->
-        <PackageReference Include="MySql.EntityFrameworkCore" Version="10.0.9"/>
+        <PackageReference Include="MySql.EntityFrameworkCore" Version="10.0.9" />
 
         <!-- Naming convention conversion related packages -->
-        <PackageReference Include="Humanizer" Version="3.0.10"/>
+        <PackageReference Include="Humanizer" Version="3.0.10" />
 
         <!-- CQRS / mediator related packages -->
-        <PackageReference Include="Cortex.Mediator" Version="3.1.2"/>
+        <PackageReference Include="Cortex.Mediator" Version="3.1.2" />
     </ItemGroup>
 
 </Project>
