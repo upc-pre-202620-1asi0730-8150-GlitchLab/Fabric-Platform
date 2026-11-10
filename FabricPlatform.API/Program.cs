@@ -5,6 +5,10 @@ using FabricPlatform.API.Machinery.Application.QueryServices;
 using FabricPlatform.API.Machinery.Domain.Repositories;
 using FabricPlatform.API.Machinery.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
 using FabricPlatform.API.Machinery.Resources;
+using FabricPlatform.API.Quality.Application.Internal.CommandHandlers;
+using FabricPlatform.API.Quality.Application.Internal.QueryHandlers;
+using FabricPlatform.API.Quality.Domain.Repositories;
+using FabricPlatform.API.Quality.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
 using FabricPlatform.API.Shared.Domain.Repositories;
 using FabricPlatform.API.Shared.Infrastructure.Interfaces.AspNetCore.Configuration;
 using FabricPlatform.API.Shared.Infrastructure.Interfaces.AspNetCore.OpenApi;
@@ -75,9 +79,23 @@ builder.Services.AddOpenApi(options =>
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<DispatchDomainEventsInterceptor>();
 
+// Machinery bounded context
 builder.Services.AddScoped<IMachineRepository, MachineRepository>();
 builder.Services.AddScoped<IMachineCommandService, MachineCommandService>();
 builder.Services.AddScoped<IMachineQueryService, MachineQueryService>();
+
+// Quality bounded context
+builder.Services.AddScoped<IFabricInspectionRepository, FabricInspectionRepository>();
+builder.Services.AddScoped<IDefectRepository, DefectRepository>();
+
+builder.Services.AddScoped<CreateFabricInspectionCommandHandler>();
+builder.Services.AddScoped<UpdateFabricInspectionParametersCommandHandler>();
+builder.Services.AddScoped<CreateDefectCommandHandler>();
+builder.Services.AddScoped<UpdateDefectCommandHandler>();
+
+builder.Services.AddScoped<GetAllFabricInspectionsQueryHandler>();
+builder.Services.AddScoped<GetFabricInspectionByIdQueryHandler>();
+builder.Services.AddScoped<GetAllDefectsQueryHandler>();
 
 builder.Services.AddScoped(typeof(ICommandPipelineBehavior<>), typeof(LoggingCommandBehavior<>));
 builder.Services.AddScoped(typeof(ICommandPipelineBehavior<>), typeof(ExceptionHandlingCommandBehavior<>));
@@ -109,6 +127,7 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
     app.MapScalarApiReference();
+    app.MapGet("/", () => Results.Redirect("/scalar/v1"));
 }
 
 app.UseCors("AllowAllPolicy");
