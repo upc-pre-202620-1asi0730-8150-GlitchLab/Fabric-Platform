@@ -1,3 +1,7 @@
+using FabricPlatform.API.Alerts.Application.Internal.QueryServices;
+using FabricPlatform.API.Alerts.Application.QueryServices;
+using FabricPlatform.API.Alerts.Domain.Repositories;
+using FabricPlatform.API.Alerts.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
 using FabricPlatform.API.Machinery.Application.CommandServices;
 using FabricPlatform.API.Machinery.Application.Internal.CommandServices;
 using FabricPlatform.API.Machinery.Application.Internal.QueryServices;
@@ -96,6 +100,10 @@ builder.Services.AddScoped<UpdateDefectCommandHandler>();
 builder.Services.AddScoped<GetAllFabricInspectionsQueryHandler>();
 builder.Services.AddScoped<GetFabricInspectionByIdQueryHandler>();
 builder.Services.AddScoped<GetAllDefectsQueryHandler>();
+
+// Alerts bounded context
+builder.Services.AddScoped<IAlertRepository, AlertRepository>();
+builder.Services.AddScoped<IAlertQueryService, AlertQueryService>();
 
 builder.Services.AddScoped(typeof(ICommandPipelineBehavior<>), typeof(LoggingCommandBehavior<>));
 builder.Services.AddScoped(typeof(ICommandPipelineBehavior<>), typeof(ExceptionHandlingCommandBehavior<>));

@@ -1,6 +1,7 @@
 using FabricPlatform.API.Machinery.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
 using FabricPlatform.API.Quality.Domain.Model.Aggregates;
 using FabricPlatform.API.Quality.Infrastructure.Persistence.EntityFrameworkCore.Configuration;
+using FabricPlatform.API.Alerts.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
 using FabricPlatform.API.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
 using FabricPlatform.API.Shared.Infrastructure.Persistence.EntityFrameworkCore.Interceptors;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     protected override void OnConfiguring(DbContextOptionsBuilder builder)
     {
         builder.AddInterceptors(new AuditableEntityInterceptor());
+
         base.OnConfiguring(builder);
     }
 
@@ -29,6 +31,9 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         // Quality bounded context
         builder.ApplyConfiguration(new FabricInspectionConfiguration());
         builder.ApplyConfiguration(new DefectConfiguration());
+
+        // Alerts bounded context
+        builder.ApplyAlertConfiguration();
 
         builder.UseSnakeCaseNamingConvention();
     }
