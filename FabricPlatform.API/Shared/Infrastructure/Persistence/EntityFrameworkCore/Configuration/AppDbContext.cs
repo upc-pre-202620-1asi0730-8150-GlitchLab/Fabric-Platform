@@ -10,7 +10,6 @@ namespace FabricPlatform.API.Shared.Infrastructure.Persistence.EntityFrameworkCo
 
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
-    // Quality bounded context
     public DbSet<FabricInspection> FabricInspections => Set<FabricInspection>();
     public DbSet<Defect> Defects => Set<Defect>();
 
@@ -25,14 +24,11 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     {
         base.OnModelCreating(builder);
 
-        // Machinery bounded context
         builder.ApplyMachineryConfiguration();
 
-        // Quality bounded context
         builder.ApplyConfiguration(new FabricInspectionConfiguration());
         builder.ApplyConfiguration(new DefectConfiguration());
 
-        // Alerts bounded context
         builder.ApplyAlertConfiguration();
 
         builder.UseSnakeCaseNamingConvention();
