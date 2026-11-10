@@ -7,6 +7,56 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.1.0] - 2026-11-03
+
+### Added
+- **Machinery Bounded Context — Domain Layer:**
+  - Added `Machine` aggregate root with `ReportDowntime()`, `ResumeOperation()`, `RegisterMaintenance()`, `UpdateStatus()` and accumulated downtime calculation.
+  - Added `MachineDowntime` and `MaintenanceRecord` entities.
+  - Added strongly-typed identifiers `MachineId`, `MachineDowntimeId` and `MaintenanceRecordId`.
+  - Added `EMachineStatus` (`Operational`, `InMaintenance`, `Stopped`) and `EMaintenanceType` (`Preventive`, `Corrective`, `Calibration`) enumerations.
+  - Added commands `RegisterMachineCommand`, `UpdateMachineStatusCommand`, `ReportMachineDowntimeCommand`, `ResumeMachineOperationCommand` and `RegisterMaintenanceRecordCommand`.
+  - Added queries `GetAllMachinesQuery`, `GetMachineByIdQuery`, `GetMachineByCodeQuery`, `GetMachineDowntimesByMachineIdQuery` and `GetMaintenanceRecordsByMachineIdQuery`.
+  - Added domain events `MachineRegisteredEvent` and `MachineDowntimeReportedEvent`.
+  - Added `MachineryError` enumeration and `MachineryErrors` error catalog.
+  - Added `IMachineRepository` contract.
+- **Machinery Bounded Context — Application Layer:**
+  - Added `MachineCommandService` and `MachineQueryService` with their interfaces.
+  - Added `MachineRegisteredEventHandler` and `MachineDowntimeReportedEventHandler`.
+- **Machinery Bounded Context — Infrastructure Layer:**
+  - Added `MachineRepository` over Entity Framework Core.
+  - Added `ApplyMachineryConfiguration()` Fluent API mapping for `machines`, `machine_downtimes` and `maintenance_records`.
+- **Machinery Bounded Context — Interfaces Layer:**
+  - Added `MachinesController` (`POST/GET /api/v1/machines`, `GET /api/v1/machines/{machineId}`, `PATCH /api/v1/machines/{machineId}/status`).
+  - Added `MachineDowntimesController` (`POST/GET /api/v1/machines/{machineId}/downtimes`, `PATCH /api/v1/machines/{machineId}/downtimes/{downtimeId}/resumption`).
+  - Added `MachineMaintenancesController` (`POST/GET /api/v1/machines/{machineId}/maintenances`).
+  - Added REST resources, resource/command assemblers and `MachineryActionResultAssembler` with RFC 9457 `ProblemDetails`.
+- **Localization:**
+  - Added Machinery error messages in English and Spanish, `CommonMessages` resources and `MachineryMessages` resources.
+- **Configuration:**
+  - Configured `Program.cs` with kebab-case routing, CORS, MySQL `AppDbContext`, localization, `ProblemDetails`, global exception handler, OpenAPI/Scalar, Cortex Mediator and Machinery dependency injection.
+  - Added Machinery requests to `FabricPlatform.API.http`.
+
+### Changed
+- `IBaseRepository` and `BaseRepository` now include `FindByIdAsNoTrackingAsync()` and `ListAsNoTrackingAsync()`, and their query methods are `virtual` so repositories can include child entities.
+- `BaseRepository.FindByIdAsync()` now supports strongly-typed identifiers.
+- `AppDbContext` now applies the Machinery configuration.
+- Renamed `ErrorMessages.en.resx` to `ErrorMessages.resx` (neutral resources) and `CommonMessage.resx` to `CommonMessages.resx`.
+
+### Fixed
+- Fixed Entity Framework Core package names in `FabricPlatform.API.csproj` (`Microsoft.EntityFrameworkCore`, `Microsoft.EntityFrameworkCore.Relational`, `Microsoft.EntityFrameworkCore.Design`).
+
+### Deprecated
+- Nothing yet.
+
+### Removed
+- Removed the default `weatherforecast` request from `FabricPlatform.API.http`.
+
+### Security
+- Nothing yet.
+
+---
+
 ## [1.0.0] - 2026-11-03
 
 ### Added

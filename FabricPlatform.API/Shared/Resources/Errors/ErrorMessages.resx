@@ -65,4 +65,38 @@
   <data name="PublishingError.InternalServerError" xml:space="preserve">
     <value>An unexpected internal error occurred in Publishing.</value>
   </data>
+
+  <data name="MachineNotFound" xml:space="preserve">
+    <value>Machine not found.</value>
+  </data>
+  <data name="DuplicateMachineCode" xml:space="preserve">
+    <value>Duplicate machine code.</value>
+  </data>
+  <data name="InvalidMachineData" xml:space="preserve">
+    <value>Invalid machine data.</value>
+  </data>
+  <data name="InvalidMachineStatus" xml:space="preserve">
+    <value>Invalid machine status.</value>
+  </data>
+  <data name="MachineAlreadyStopped" xml:space="preserve">
+    <value>Machine already stopped.</value>
+  </data>
+  <data name="DowntimeNotFound" xml:space="preserve">
+    <value>Downtime not found.</value>
+  </data>
+  <data name="DowntimeAlreadyClosed" xml:space="preserve">
+    <value>Downtime already closed.</value>
+  </data>
+  <data name="InvalidDowntimeData" xml:space="preserve">
+    <value>Invalid downtime data.</value>
+  </data>
+  <data name="InvalidDowntimePeriod" xml:space="preserve">
+    <value>Invalid downtime period.</value>
+  </data>
+  <data name="InvalidMaintenanceData" xml:space="preserve">
+    <value>Invalid maintenance data.</value>
+  </data>
+  <data name="InvalidMaintenanceType" xml:space="preserve">
+    <value>Invalid maintenance type.</value>
+  </data>
 </root>

@@ -65,4 +65,38 @@
     <data name="PublishingError.InternalServerError" xml:space="preserve">
     <value>Ocurrió un error interno inesperado en Publicación.</value>
   </data>
+
+  <data name="MachineNotFound" xml:space="preserve">
+    <value>Máquina no encontrada.</value>
+  </data>
+  <data name="DuplicateMachineCode" xml:space="preserve">
+    <value>Código de máquina duplicado.</value>
+  </data>
+  <data name="InvalidMachineData" xml:space="preserve">
+    <value>Datos de máquina inválidos.</value>
+  </data>
+  <data name="InvalidMachineStatus" xml:space="preserve">
+    <value>Estado de máquina inválido.</value>
+  </data>
+  <data name="MachineAlreadyStopped" xml:space="preserve">
+    <value>La máquina ya se encuentra detenida.</value>
+  </data>
+  <data name="DowntimeNotFound" xml:space="preserve">
+    <value>Parada no encontrada.</value>
+  </data>
+  <data name="DowntimeAlreadyClosed" xml:space="preserve">
+    <value>La parada ya fue cerrada.</value>
+  </data>
+  <data name="InvalidDowntimeData" xml:space="preserve">
+    <value>Datos de parada inválidos.</value>
+  </data>
+  <data name="InvalidDowntimePeriod" xml:space="preserve">
+    <value>Periodo de parada inválido.</value>
+  </data>
+  <data name="InvalidMaintenanceData" xml:space="preserve">
+    <value>Datos de mantenimiento inválidos.</value>
+  </data>
+  <data name="InvalidMaintenanceType" xml:space="preserve">
+    <value>Tipo de mantenimiento inválido.</value>
+  </data>
 </root>
