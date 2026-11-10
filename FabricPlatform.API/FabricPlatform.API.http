@@ -68,3 +68,17 @@ Content-Type: application/json
 ### Get maintenance history
 GET {{FabricPlatform.API_HostAddress}}/api/v1/machines/1/maintenances
 Accept: application/json
+
+### Register a fabric inspection
+POST {{FabricPlatform.API_HostAddress}}/fabricInspections
+Content-Type: application/json
+
+{
+  "rollId": "ROLL-001",
+  "supplier": "Textil San Pedro S.A.C.",
+  "inspectionDate": "2026-11-09",
+  "sample": "Jersey 30/1 Pima",
+  "color": "Navy",
+  "initialResult": "Conforming",
+  "rollStatus": "Available for Cutting"
+}
