@@ -5,5 +5,5 @@ namespace FabricPlatform.API.Batches.Application.CommandServices;
 
 public interface IAssignOperatorToBatchCommandService
 {
-    Task<Result<bool>> HandleAsync(AssignOperatorToBatchCommand command, CancellationToken cancellationToken = default);
+    Task<Result<int>> HandleAsync(AssignOperatorToBatchCommand command, CancellationToken cancellationToken = default);
 }

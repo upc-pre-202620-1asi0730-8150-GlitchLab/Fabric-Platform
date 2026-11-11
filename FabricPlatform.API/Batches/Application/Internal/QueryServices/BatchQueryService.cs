@@ -31,6 +31,9 @@ public class BatchQueryService : IBatchQueryService, IBatchTraceabilityQueryServ
         var id = new Domain.Model.ValueObjects.BatchId(batchId);
         var batch = await _batchRepository.FindByIdAsync(id, cancellationToken);
         
-        return batch?.Movements ?? Enumerable.Empty<BatchMovement>();
+        return batch?.Movements
+                   .OrderBy(movement => movement.Timestamp)
+                   .ThenBy(movement => movement.Id)
+               ?? Enumerable.Empty<BatchMovement>();
     }
 }
