@@ -7,11 +7,10 @@ public static class CreateBatchCommandFromResourceAssembler
 {
     public static CreateBatchCommand ToCommandFromResource(CreateBatchResource resource)
     {
-        return new CreateBatchCommand
-        {
-            Code = resource.Code,
-            ProjectedQuantity = resource.ProjectedQuantity,
-            DeliveryDate = resource.DeliveryDate
-        };
+        return new CreateBatchCommand(
+            resource.GarmentModel ?? string.Empty,
+            resource.ProjectedQuantity ?? 0,
+            resource.DeliveryDate ?? default,
+            resource.Notes);
     }
 }

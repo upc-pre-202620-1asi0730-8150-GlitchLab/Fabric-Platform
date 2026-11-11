@@ -10,8 +10,9 @@ public static class UpdateBatchStageCommandFromResourceAssembler
         return new UpdateBatchStageCommand
         {
             BatchId = batchId,
-            NewStage = resource.NewStage,
-            ProcessedQuantity = resource.ProcessedQuantity
+            NewStage = resource.CurrentStage ?? string.Empty,
+            ProcessedQuantity = resource.ProcessedQuantity,
+            Notes = resource.Notes
         };
     }
 }

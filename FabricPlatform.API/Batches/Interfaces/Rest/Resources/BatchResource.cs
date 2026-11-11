@@ -2,8 +2,13 @@ namespace FabricPlatform.API.Batches.Interfaces.Rest.Resources;
 
 public record BatchResource(
     int Id,
-    string Code,
-    string Status,
+    string BatchNumber,
+    string GarmentModel,
     int ProjectedQuantity,
-    DateTimeOffset DeliveryDate
-);
+    int ProcessedQuantity,
+    string CurrentStage,
+    int ProgressPercentage,
+    DateTimeOffset DeliveryDate,
+    string Status,
+    string? TechnicalSheetUrl,
+    string Notes);
