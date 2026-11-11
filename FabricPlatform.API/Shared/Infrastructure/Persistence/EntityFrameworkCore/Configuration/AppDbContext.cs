@@ -5,6 +5,7 @@ using FabricPlatform.API.Alerts.Infrastructure.Persistence.EntityFrameworkCore.C
 using FabricPlatform.API.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
 using FabricPlatform.API.Shared.Infrastructure.Persistence.EntityFrameworkCore.Interceptors;
 using Microsoft.EntityFrameworkCore;
+using FabricPlatform.API.Batches.Infrastructure.Persistence.EntityFrameworkCore.Configuration;
 
 namespace FabricPlatform.API.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration;
 
@@ -32,5 +33,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         builder.ApplyAlertConfiguration();
 
         builder.UseSnakeCaseNamingConvention();
+        builder.ApplyConfigurationsFromAssembly(typeof(BatchConfiguration).Assembly);
     }
 }
