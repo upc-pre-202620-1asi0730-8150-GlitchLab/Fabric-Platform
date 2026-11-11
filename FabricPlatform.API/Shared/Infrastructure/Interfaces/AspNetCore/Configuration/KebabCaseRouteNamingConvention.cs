@@ -14,7 +14,7 @@ public class KebabCaseRouteNamingConvention : IControllerModelConvention
         foreach (var selector in controller.Actions.SelectMany(a => a.Selectors))
             selector.AttributeRouteModel = ReplaceControllerTemplate(selector, controller.ControllerName);
     }
-    
+
     private static AttributeRouteModel? ReplaceControllerTemplate(SelectorModel selector, string name)
     {
         return selector.AttributeRouteModel != null

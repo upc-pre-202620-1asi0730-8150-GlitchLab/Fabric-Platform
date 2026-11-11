@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <data name="MachineRegistered" xml:space="preserve">
+    <value>Machine {0} registered.</value>
+  </data>
+    <data name="MachineDowntimeReported" xml:space="preserve">
+    <value>Downtime reported for machine {0}.</value>
+  </data>
+</root>
