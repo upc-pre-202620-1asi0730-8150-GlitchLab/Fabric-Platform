@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using FabricPlatform.API.Batches.Domain.Model.Entities;
+using FabricPlatform.API.Batches.Domain.Model.ValueObjects;
 using FabricPlatform.API.Batches.Infrastructure.Persistence.EntityFrameworkCore.Configuration.ValueConverters;
 
 namespace FabricPlatform.API.Batches.Infrastructure.Persistence.EntityFrameworkCore.Configuration;
@@ -12,7 +13,7 @@ public class BatchOperatorConfiguration : IEntityTypeConfiguration<BatchOperator
         builder.ToTable("batch_operators");
         
         builder.HasKey(o => o.Id);
-        
+
         builder.Property(o => o.Id)
             .ValueGeneratedOnAdd();
 
@@ -31,7 +32,13 @@ public class BatchOperatorConfiguration : IEntityTypeConfiguration<BatchOperator
             .HasMaxLength(100);
 
         builder.Property(o => o.AssignedStage)
-            .IsRequired();
+            .HasConversion(
+                stageName => stageName.Value,
+                value => new StageName(value)
+            )
+            .HasColumnName("assigned_stage")
+            .IsRequired()
+            .HasMaxLength(100);
 
         builder.Property(o => o.AssignmentDate)
             .IsRequired();

@@ -1,8 +1,7 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using FabricPlatform.API.Batches.Domain.Model.Aggregates;
 using FabricPlatform.API.Batches.Domain.Model.ValueObjects;
-using FabricPlatform.API.Batches.Infrastructure.Persistence.EntityFrameworkCore.Configuration.ValueConverters;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FabricPlatform.API.Batches.Infrastructure.Persistence.EntityFrameworkCore.Configuration;
 
@@ -13,25 +12,71 @@ public class BatchConfiguration : IEntityTypeConfiguration<Batch>
         builder.ToTable("batches");
 
         builder.HasKey(b => b.Id);
-        
+
         builder.Property(b => b.Id)
-            .HasConversion(new BatchIdValueConverter())
+            .HasConversion(
+                batchId => batchId.Value,
+                value => new BatchId(value))
+            .HasColumnName("id")
             .ValueGeneratedOnAdd();
 
         builder.Property(b => b.Code)
             .HasConversion(
-                batchCode => batchCode.Value,
-                value => new BatchCode(value)
-            )
+                code => code.Value,
+                value => new BatchCode(value))
             .HasColumnName("code")
-            .IsRequired()
             .HasMaxLength(50);
+
+        builder.Property(b => b.GarmentModel)
+            .HasColumnName("garment_model")
+            .HasMaxLength(200);
+
+        builder.Property(b => b.Status)
+            .HasConversion<string>()
+            .HasColumnName("status");
+
+        builder.Property(b => b.ProjectedQuantity)
+            .HasColumnName("projected_quantity");
+
+        builder.Property(b => b.ProcessedQuantity)
+            .HasColumnName("processed_quantity")
+            .HasDefaultValue(0);
+
+        builder.Property(b => b.CurrentStage)
+            .HasConversion(
+                stage => stage.Value,
+                value => new StageName(value))
+            .HasColumnName("current_stage")
+            .HasMaxLength(100);
+
+        builder.Property(b => b.ProgressPercentage)
+            .HasColumnName("progress_percentage");
+
+        builder.Property(b => b.DeliveryDate)
+            .HasColumnName("delivery_date");
+
+        builder.Property(b => b.TechnicalSheetUrl)
+            .HasColumnName("technical_sheet_url")
+            .HasMaxLength(500);
+
+        builder.Property(b => b.Notes)
+            .HasColumnName("notes")
+            .HasMaxLength(1000);
 
         builder.HasMany(b => b.Stages)
             .WithOne()
-            .HasForeignKey(s => s.BatchId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .HasForeignKey("BatchId");
 
-        builder.Ignore(b => b.DomainEvents);
+        builder.HasMany(b => b.Operators)
+            .WithOne()
+            .HasForeignKey("BatchId");
+
+        builder.HasMany(b => b.Movements)
+            .WithOne()
+            .HasForeignKey("BatchId");
+
+        builder.HasMany(b => b.Observations)
+            .WithOne()
+            .HasForeignKey("BatchId");
     }
 }
