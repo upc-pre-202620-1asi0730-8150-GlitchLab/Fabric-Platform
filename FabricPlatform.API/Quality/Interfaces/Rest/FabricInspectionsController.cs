@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using FabricPlatform.API.Quality.Application.Internal.Commands;
 using FabricPlatform.API.Quality.Application.Internal.CommandHandlers;
@@ -14,7 +15,8 @@ using FabricPlatform.API.Quality.Domain.Model.ValueObjects;
 using FabricPlatform.API.Quality.Interfaces.Rest.Resources;
 
 [ApiController]
-[Route("fabricInspections")]
+[Route("api/v1/fabric-inspections")]
+[Tags("Fabric-Inspections")]
 public class FabricInspectionsController(
     CreateFabricInspectionCommandHandler createHandler,
     UpdateFabricInspectionParametersCommandHandler updateHandler,
@@ -55,8 +57,8 @@ public class FabricInspectionsController(
             error => BadRequest(error));
     }
 
-    [HttpPatch("{id:int}")]
-    public async Task<IActionResult> Update(int id, [FromBody] PatchFabricInspectionResource resource, CancellationToken ct)
+    [HttpPut("{id:int}")]
+    public async Task<IActionResult> Update(int id, [FromBody] UpdateFabricInspectionResource resource, CancellationToken ct)
     {
         var history = resource.ParameterHistory?.Select(h => new InspectionParameterRecord(
             DateTime.TryParse(h.Date, out var d) ? d : DateTime.UtcNow,

@@ -11,7 +11,7 @@ public record CreateFabricInspectionResource(
     string? InitialResult,
     string? RollStatus);
 
-public record PatchFabricInspectionResource(
+public record UpdateFabricInspectionResource(
     ParametersDto? Parameters,
     List<ParameterHistoryDto>? ParameterHistory,
     string? ShrinkageTest,

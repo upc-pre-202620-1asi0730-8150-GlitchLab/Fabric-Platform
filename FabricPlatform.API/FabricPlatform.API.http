@@ -70,7 +70,7 @@ GET {{FabricPlatform.API_HostAddress}}/api/v1/machines/1/maintenances
 Accept: application/json
 
 ### Register a fabric inspection
-POST {{FabricPlatform.API_HostAddress}}/fabricInspections
+POST {{FabricPlatform.API_HostAddress}}/api/v1/fabric-inspections
 Content-Type: application/json
 
 {

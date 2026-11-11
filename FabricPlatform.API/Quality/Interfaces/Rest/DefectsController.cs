@@ -3,6 +3,7 @@ namespace FabricPlatform.API.Quality.Interfaces.Rest;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using FabricPlatform.API.Quality.Application.Internal.Commands;
 using FabricPlatform.API.Quality.Application.Internal.CommandHandlers;
@@ -12,7 +13,8 @@ using FabricPlatform.API.Quality.Domain.Model.Aggregates;
 using FabricPlatform.API.Quality.Interfaces.Rest.Resources;
 
 [ApiController]
-[Route("defects")]
+[Route("api/v1/defects")]
+[Tags("Defects")]
 public class DefectsController(
     CreateDefectCommandHandler createHandler,
     UpdateDefectCommandHandler updateHandler,
@@ -46,7 +48,7 @@ public class DefectsController(
             error => BadRequest(error));
     }
 
-    [HttpPatch("{id:int}")]
+    [HttpPut("{id:int}")]
     public async Task<IActionResult> Update(int id, [FromBody] UpdateDefectResource resource, CancellationToken ct)
     {
         var command = new UpdateDefectCommand(
