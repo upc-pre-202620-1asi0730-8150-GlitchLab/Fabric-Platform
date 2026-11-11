@@ -18,15 +18,14 @@ public sealed class AuditableEntityInterceptor: SaveChangesInterceptor
 
         foreach (var entry in context.ChangeTracker.Entries<IAuditableEntity>())
         {
-            if (entry.State is EntityState.Added or EntityState.Modified) 
+            if (entry.State is EntityState.Added or EntityState.Modified)
                 entry.Entity.UpdatedAt = now;
             if (entry.State is EntityState.Added) entry.Entity.CreatedAt ??= now;
         }
-        
     }
 
     public override InterceptionResult<int> SavingChanges(
-        DbContextEventData eventData, 
+        DbContextEventData eventData,
         InterceptionResult<int> result)
     {
         ApplyAuditTimestamps(eventData.Context);
@@ -34,11 +33,11 @@ public sealed class AuditableEntityInterceptor: SaveChangesInterceptor
     }
 
     public override ValueTask<InterceptionResult<int>> SavingChangesAsync(
-        DbContextEventData eventData, 
+        DbContextEventData eventData,
         InterceptionResult<int> result,
         CancellationToken cancellationToken = default)
     {
         ApplyAuditTimestamps(eventData.Context);
-        return base.SavingChangesAsync(eventData, result, cancellationToken);   
+        return base.SavingChangesAsync(eventData, result, cancellationToken);
     }
 }
