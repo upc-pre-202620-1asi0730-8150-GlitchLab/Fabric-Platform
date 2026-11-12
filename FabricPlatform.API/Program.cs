@@ -2,6 +2,14 @@ using FabricPlatform.API.Alerts.Application.Internal.QueryServices;
 using FabricPlatform.API.Alerts.Application.QueryServices;
 using FabricPlatform.API.Alerts.Domain.Repositories;
 using FabricPlatform.API.Alerts.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
+using FabricPlatform.API.Batches.Application.CommandServices;
+using FabricPlatform.API.Batches.Application.Internal.CommandServices;
+using FabricPlatform.API.Batches.Application.Internal.QueryServices;
+using FabricPlatform.API.Batches.Application.QueryServices;
+using FabricPlatform.API.Batches.Domain.Repositories;
+using FabricPlatform.API.Batches.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
+using FabricPlatform.API.Reporting.Application.Internal.QueryServices;
+using FabricPlatform.API.Reporting.Application.QueryServices;
 using FabricPlatform.API.Machinery.Application.CommandServices;
 using FabricPlatform.API.Machinery.Application.Internal.CommandServices;
 using FabricPlatform.API.Machinery.Application.Internal.QueryServices;
@@ -94,12 +102,28 @@ builder.Services.AddScoped<IDefectRepository, DefectRepository>();
 
 builder.Services.AddScoped<CreateFabricInspectionCommandHandler>();
 builder.Services.AddScoped<UpdateFabricInspectionParametersCommandHandler>();
+builder.Services.AddScoped<UpdateFabricInspectionRollStatusCommandHandler>();
 builder.Services.AddScoped<CreateDefectCommandHandler>();
 builder.Services.AddScoped<UpdateDefectCommandHandler>();
 
 builder.Services.AddScoped<GetAllFabricInspectionsQueryHandler>();
 builder.Services.AddScoped<GetFabricInspectionByIdQueryHandler>();
 builder.Services.AddScoped<GetAllDefectsQueryHandler>();
+
+// Batches bounded context
+builder.Services.AddScoped<IBatchRepository, BatchRepository>();
+builder.Services.AddScoped<IProductionOperatorRepository, ProductionOperatorRepository>();
+builder.Services.AddScoped<ICreateBatchCommandService, BatchCommandService>();
+builder.Services.AddScoped<IAssignOperatorToBatchCommandService, BatchCommandService>();
+builder.Services.AddScoped<IUpdateBatchStageCommandService, BatchCommandService>();
+builder.Services.AddScoped<IBatchOperationsCommandService, BatchCommandService>();
+builder.Services.AddScoped<ICreateProductionOperatorCommandService, ProductionOperatorCommandService>();
+builder.Services.AddScoped<IBatchQueryService, BatchQueryService>();
+builder.Services.AddScoped<IBatchTraceabilityQueryService, BatchQueryService>();
+builder.Services.AddScoped<IProductionOperatorQueryService, ProductionOperatorQueryService>();
+
+// Reporting bounded context
+builder.Services.AddScoped<IDashboardMetricsQueryService, DashboardMetricsQueryService>();
 
 // Alerts bounded context
 builder.Services.AddScoped<IAlertRepository, AlertRepository>();
