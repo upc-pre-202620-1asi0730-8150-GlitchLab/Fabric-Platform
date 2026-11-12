@@ -78,8 +78,8 @@ public class BatchesController : ControllerBase
             BatchResourceFromEntityAssembler.ToResourceFromEntity(batch));
     }
 
-    [HttpPatch("batches/{id:int}")]
-    public async Task<IActionResult> PatchBatch(int id, [FromBody] UpdateBatchStageResource resource,
+    [HttpPut("batches/{id:int}")]
+    public async Task<IActionResult> UpdateBatch(int id, [FromBody] UpdateBatchStageResource resource,
         CancellationToken cancellationToken)
     {
         if (id <= 0) return BadRequest(BatchErrors.InvalidRequest);
@@ -116,8 +116,8 @@ public class BatchesController : ControllerBase
                 batch.GetTraceabilitySummary()));
     }
 
-    [HttpPatch("traceabilityHistory/{id:int}")]
-    public async Task<IActionResult> PatchTraceabilityMovement(int id,
+    [HttpPut("traceabilityHistory/{id:int}")]
+    public async Task<IActionResult> UpdateTraceabilityMovement(int id,
         [FromBody] UpdateTraceabilityMovementResource resource, CancellationToken cancellationToken)
     {
         var command = new UpdateBatchMovementCommand(

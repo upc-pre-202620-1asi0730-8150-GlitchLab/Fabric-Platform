@@ -63,7 +63,7 @@ public class MachineDowntimesController(
         return Ok(downtimeResources);
     }
 
-    [HttpPatch("{downtimeId:int}/resumption")]
+    [HttpPut("{downtimeId:int}/resumption")]
     [EndpointSummary("Resume the operation of a machine")]
     [EndpointDescription(
         "Closes an open downtime, calculates its duration in minutes and restores the machine status to Operational")]

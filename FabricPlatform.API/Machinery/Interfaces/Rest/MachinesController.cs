@@ -89,7 +89,7 @@ public class MachinesController(
         return Ok(machineResources);
     }
 
-    [HttpPatch("{machineId:int}/status")]
+    [HttpPut("{machineId:int}/status")]
     [EndpointSummary("Update the status of a machine")]
     [EndpointDescription("Updates the operational status of a machine (Operational, InMaintenance, Stopped)")]
     [ProducesResponseType(typeof(MachineResource), StatusCodes.Status200OK)]

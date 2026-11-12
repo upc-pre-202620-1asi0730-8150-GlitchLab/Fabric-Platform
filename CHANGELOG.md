@@ -27,8 +27,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added `MachineRepository` over Entity Framework Core.
   - Added `ApplyMachineryConfiguration()` Fluent API mapping for `machines`, `machine_downtimes` and `maintenance_records`.
 - **Machinery Bounded Context — Interfaces Layer:**
-  - Added `MachinesController` (`POST/GET /api/v1/machines`, `GET /api/v1/machines/{machineId}`, `PATCH /api/v1/machines/{machineId}/status`).
-  - Added `MachineDowntimesController` (`POST/GET /api/v1/machines/{machineId}/downtimes`, `PATCH /api/v1/machines/{machineId}/downtimes/{downtimeId}/resumption`).
+  - Added `MachinesController` (`POST/GET /api/v1/machines`, `GET /api/v1/machines/{machineId}`, `PUT /api/v1/machines/{machineId}/status`).
+  - Added `MachineDowntimesController` (`POST/GET /api/v1/machines/{machineId}/downtimes`, `PUT /api/v1/machines/{machineId}/downtimes/{downtimeId}/resumption`).
   - Added `MachineMaintenancesController` (`POST/GET /api/v1/machines/{machineId}/maintenances`).
   - Added REST resources, resource/command assemblers and `MachineryActionResultAssembler` with RFC 9457 `ProblemDetails`.
 - **Localization:**

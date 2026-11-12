@@ -50,7 +50,7 @@ Acceptance criteria:
   - When a machine with that code exists, the API responds `200 OK` with an array containing that `MachineResource`
   - When no machine has that code, the API responds `200 OK` with an empty array
 - **Scenario: Update machine status**
-  - Given a machine exists and a `PATCH` request to `/api/v1/machines/{machineId}/status` is received with a body containing a valid `status` (`Operational`, `InMaintenance`, `Stopped`)
+  - Given a machine exists and a `PUT` request to `/api/v1/machines/{machineId}/status` is received with a body containing a valid `status` (`Operational`, `InMaintenance`, `Stopped`)
   - When the API applies the status change
   - Then the API responds `200 OK` with the updated `MachineResource`
   - If the `status` value is invalid, the API responds `400 Bad Request`
@@ -74,7 +74,7 @@ Acceptance criteria:
   - When a new `POST` request to `/api/v1/machines/{machineId}/downtimes` is received
   - Then the API responds `409 Conflict`
 - **Scenario: Resume operation**
-  - Given an open downtime exists and a `PATCH` request to `/api/v1/machines/{machineId}/downtimes/{downtimeId}/resumption` is received with a body containing: `endTime`, `solution`
+  - Given an open downtime exists and a `PUT` request to `/api/v1/machines/{machineId}/downtimes/{downtimeId}/resumption` is received with a body containing: `endTime`, `solution`
   - When the API closes the downtime
   - Then the API calculates `durationMinutes`, restores the machine status to `Operational` and responds `200 OK` with the updated `MachineDowntimeResource`
   - If `endTime` is earlier than `startTime`, the API responds `400 Bad Request`
@@ -167,7 +167,7 @@ As a frontend developer, I want to update the stage of a batch and query its mov
 
 Acceptance criteria:
 - **Scenario: Successful stage update**
-  - Given a batch exists and a `PATCH` request to `/api/v1/production-batches/{batchId}/stage` is received with a body containing: `stage`, `inputQuantity`, `outputQuantity`, `responsible`
+  - Given a batch exists and a `PUT` request to `/api/v1/production-batches/{batchId}/stage` is received with a body containing: `stage`, `inputQuantity`, `outputQuantity`, `responsible`
   - Then the API updates the stage, registers a `LotMovement`, recalculates the progress percentage and responds `200 OK` with `ProductionBatchResource`
 - **Scenario: Batch not found**
   - Given the `batchId` does not exist
@@ -220,7 +220,7 @@ Acceptance criteria:
   - Given a defect exists and a `PUT` request to `/api/v1/defects/{defectId}/evidences` is received with a list of evidences
   - Then the API stores the evidences and responds `200 OK`
 - **Scenario: Register disposition**
-  - Given a defect in evaluation and a `PATCH` request to `/api/v1/defects/{defectId}/disposition` is received with a body containing: `disposition`
+  - Given a defect in evaluation and a `PUT` request to `/api/v1/defects/{defectId}/disposition` is received with a body containing: `disposition`
   - Then the API updates the status of the defect and responds `200 OK`
 
 ---
@@ -271,6 +271,6 @@ Acceptance criteria:
   - Then the API registers the user and responds `201 Created` with a `Location` header (`/api/v1/users/{userId}`) and `UserResource`
   - If the username already exists, the API responds `409 Conflict`
 - **Scenario: Update user data**
-  - Given a user exists and a `PATCH` request to `/api/v1/users/{userId}` is received with valid data
+  - Given a user exists and a `PUT` request to `/api/v1/users/{userId}` is received with valid data
   - Then the API updates the user and responds `200 OK` with the updated `UserResource`
   - If the user does not exist, the API responds `404 Not Found`

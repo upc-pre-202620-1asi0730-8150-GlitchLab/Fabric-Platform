@@ -25,7 +25,7 @@ GET {{FabricPlatform.API_HostAddress}}/api/v1/machines/1
 Accept: application/json
 
 ### Update machine status
-PATCH {{FabricPlatform.API_HostAddress}}/api/v1/machines/1/status
+PUT {{FabricPlatform.API_HostAddress}}/api/v1/machines/1/status
 Content-Type: application/json
 
 {
@@ -42,7 +42,7 @@ Content-Type: application/json
 }
 
 ### Resume operation
-PATCH {{FabricPlatform.API_HostAddress}}/api/v1/machines/1/downtimes/1/resumption
+PUT {{FabricPlatform.API_HostAddress}}/api/v1/machines/1/downtimes/1/resumption
 Content-Type: application/json
 
 {
