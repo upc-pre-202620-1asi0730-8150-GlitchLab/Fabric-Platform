@@ -39,6 +39,24 @@ public class Alert : AggregateRoot
         Batch = batch;
     }
 
+    public const string MachineDowntimeType = "Machine Downtime";
+
+    public static Alert ForMachineDowntime(string machineId, string machineCode, int accumulatedMinutes, int limitMinutes)
+    {
+        var alert = new Alert("CRITICAL", MachineDowntimeType, machineCode, "Machine downtime above limit",
+            string.Empty, "View Machine", string.Empty, string.Empty, string.Empty, machineId, string.Empty);
+        alert.RefreshMachineDowntime(accumulatedMinutes, limitMinutes);
+        return alert;
+    }
+
+    public void RefreshMachineDowntime(int accumulatedMinutes, int limitMinutes)
+    {
+        Accumulated = $"{accumulatedMinutes} min";
+        Limit = $"{limitMinutes} min";
+        Excess = $"{accumulatedMinutes - limitMinutes} min";
+        Description = $"Accumulated downtime: {Accumulated} · Maximum allowed: {Limit}";
+    }
+
     public AlertId Id { get; private set; }
 
     public string Status { get; private set; } = string.Empty;

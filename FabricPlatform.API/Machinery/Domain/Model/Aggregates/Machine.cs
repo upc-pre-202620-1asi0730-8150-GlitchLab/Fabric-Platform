@@ -78,6 +78,7 @@ public partial class Machine : AggregateRoot
                        ?? throw new InvalidOperationException("The downtime does not belong to this machine.");
         downtime.Close(endTime, solution);
         Status = EMachineStatus.Operational;
+        AddDomainEvent(new MachineDowntimeResumedEvent(Id, Code, AccumulatedDowntimeMinutes));
         return downtime;
     }
 
