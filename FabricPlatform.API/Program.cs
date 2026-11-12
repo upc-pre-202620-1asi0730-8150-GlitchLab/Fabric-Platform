@@ -29,6 +29,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Scalar.AspNetCore;
 using ProblemDetailsFactory = FabricPlatform.API.Shared.Interfaces.Rest.ProblemDetails.ProblemDetailsFactory;
+using FabricPlatform.API.Analytics.Application.Internal.QueryServices;
+using FabricPlatform.API.Analytics.Application.QueryServices;
+using FabricPlatform.API.Batches.Domain.Repositories;
+using FabricPlatform.API.Batches.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -72,6 +77,10 @@ builder.Services.AddSingleton<IStringLocalizer<ErrorMessages>, StringLocalizer<E
 builder.Services.AddSingleton<IStringLocalizer<CommonMessages>, StringLocalizer<CommonMessages>>();
 builder.Services.AddSingleton<IStringLocalizer<MachineryMessage>, StringLocalizer<MachineryMessage>>();
 
+builder.Services.AddScoped<IBatchRepository, BatchRepository>();
+
+
+builder.Services.AddScoped<IAnalyticsQueryService, AnalyticsQueryService>();
 builder.Services.AddSingleton<ProblemDetailsFactory>();
 
 builder.Services.AddOpenApi(options =>
