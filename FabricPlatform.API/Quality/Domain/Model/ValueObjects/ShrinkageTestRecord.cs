@@ -7,4 +7,9 @@ public record ShrinkageTestRecord(
     string LenShrinkage,
     string WidthShrinkage,
     string Result,
-    string? Note);
+    string? Note,
+    decimal? InitialLength = null,
+    decimal? InitialWidth = null,
+    decimal? FinalLength = null,
+    decimal? FinalWidth = null,
+    decimal? Tolerance = null);

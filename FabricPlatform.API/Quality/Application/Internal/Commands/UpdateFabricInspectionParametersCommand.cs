@@ -5,8 +5,9 @@ using FabricPlatform.API.Quality.Domain.Model.ValueObjects;
 
 public record UpdateFabricInspectionParametersCommand(
     int InspectionId,
-    int? FabricWidth,
+    decimal? FabricWidth,
     int? FabricWeight,
+    decimal? FabricLength,
     string? ShadeCondition,
     string? WeaveCondition,
     string? SurfaceCondition,

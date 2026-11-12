@@ -11,6 +11,8 @@ public class GetAllDefectsQueryHandler(IDefectRepository defectRepository)
 {
     public async Task<IEnumerable<Defect>> Handle(GetAllDefectsQuery query, CancellationToken ct = default)
     {
-        return await defectRepository.ListAsync(ct);
+        return string.IsNullOrWhiteSpace(query.BatchId)
+            ? await defectRepository.ListAsync(ct)
+            : await defectRepository.FindByBatchIdAsync(query.BatchId, ct);
     }
 }

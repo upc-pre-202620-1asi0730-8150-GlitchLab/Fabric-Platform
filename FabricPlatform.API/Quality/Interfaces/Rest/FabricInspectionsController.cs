@@ -20,6 +20,7 @@ using FabricPlatform.API.Quality.Interfaces.Rest.Resources;
 public class FabricInspectionsController(
     CreateFabricInspectionCommandHandler createHandler,
     UpdateFabricInspectionParametersCommandHandler updateHandler,
+    UpdateFabricInspectionRollStatusCommandHandler updateRollStatusHandler,
     GetAllFabricInspectionsQueryHandler getAllHandler,
     GetFabricInspectionByIdQueryHandler getByIdHandler) : ControllerBase
 {
@@ -49,7 +50,11 @@ public class FabricInspectionsController(
             resource.Sample,
             resource.Color ?? "Navy",
             resource.InitialResult ?? "Conforming",
-            resource.RollStatus ?? "Available for Cutting");
+            resource.RollStatus ?? "Available for Cutting",
+            resource.RollLength,
+            resource.ShadeMatch ?? string.Empty,
+            resource.WeaveCondition ?? string.Empty,
+            resource.Observation ?? string.Empty);
 
         var result = await createHandler.Handle(command, ct);
         return result.Match<IActionResult>(
@@ -64,9 +69,10 @@ public class FabricInspectionsController(
             DateTime.TryParse(h.Date, out var d) ? d : DateTime.UtcNow,
             h.FabricWidth,
             h.FabricWeight,
+            h.FabricLength,
             h.ShadeCondition,
-            h.WeaveCondition,
-            h.SurfaceCondition,
+            h.WeaveCondition ?? string.Empty,
+            h.SurfaceCondition ?? string.Empty,
             h.DefectsDetected,
             h.Observations));
 
@@ -77,12 +83,18 @@ public class FabricInspectionsController(
             t.LenShrinkage,
             t.WidthShrinkage,
             t.Result,
-            t.Note));
+            t.Note,
+            t.InitialLength,
+            t.InitialWidth,
+            t.FinalLength,
+            t.FinalWidth,
+            t.Tolerance));
 
         var command = new UpdateFabricInspectionParametersCommand(
             id,
             resource.Parameters?.FabricWidth,
             resource.Parameters?.FabricWeight,
+            resource.Parameters?.FabricLength,
             resource.Parameters?.ShadeCondition,
             resource.Parameters?.WeaveCondition,
             resource.Parameters?.SurfaceCondition,
@@ -93,6 +105,15 @@ public class FabricInspectionsController(
             tests);
 
         var result = await updateHandler.Handle(command, ct);
+        return result.Match<IActionResult>(
+            inspection => Ok(MapToResponse(inspection)),
+            error => BadRequest(error));
+    }
+
+    [HttpPut("{id:int}/status")]
+    public async Task<IActionResult> UpdateRollStatus(int id, [FromBody] UpdateRollStatusResource resource, CancellationToken ct)
+    {
+        var result = await updateRollStatusHandler.Handle(new UpdateFabricInspectionRollStatusCommand(id, resource.RollStatus), ct);
         return result.Match<IActionResult>(
             inspection => Ok(MapToResponse(inspection)),
             error => BadRequest(error));
@@ -113,15 +134,18 @@ public class FabricInspectionsController(
             item.Parameters is not null ? new ParametersDto(
                 item.Parameters.FabricWidth,
                 item.Parameters.FabricWeight,
+                item.Parameters.FabricLength,
                 item.Parameters.ShadeCondition,
                 item.Parameters.WeaveCondition,
                 item.Parameters.SurfaceCondition,
                 item.Parameters.DefectsDetected,
-                item.Parameters.Observations) : null,
+                item.Parameters.Observations,
+                item.Parameters.UpdatedAt) : null,
             item.ParameterHistory.Select(h => new ParameterHistoryDto(
                 h.Date.ToString("yyyy-MM-dd"),
                 h.FabricWidth,
                 h.FabricWeight,
+                h.FabricLength,
                 h.ShadeCondition,
                 h.WeaveCondition,
                 h.SurfaceCondition,
@@ -134,6 +158,15 @@ public class FabricInspectionsController(
                 t.LenShrinkage,
                 t.WidthShrinkage,
                 t.Result,
-                t.Note)));
+                t.Note,
+                t.InitialLength,
+                t.InitialWidth,
+                t.FinalLength,
+                t.FinalWidth,
+                t.Tolerance)),
+            item.RollLength,
+            item.ShadeMatch,
+            item.WeaveCondition,
+            item.Observation);
     }
 }

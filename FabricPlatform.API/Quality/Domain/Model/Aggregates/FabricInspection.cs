@@ -11,12 +11,18 @@ public class FabricInspection : AggregateRoot, IAuditableEntity
     private readonly List<InspectionParameterRecord> _parameterHistory = [];
     private readonly List<ShrinkageTestRecord> _testHistory = [];
 
+    public static readonly IReadOnlyCollection<string> RollStatuses = ["Available for Cutting", "Blocked"];
+
     public FabricInspectionId Id { get; private set; }
     public string RollId { get; private set; } = string.Empty;
     public string Supplier { get; private set; } = string.Empty;
     public string InspectionDate { get; private set; } = string.Empty;
     public string Sample { get; private set; } = string.Empty;
     public string Color { get; private set; } = "Navy";
+    public decimal? RollLength { get; private set; }
+    public string ShadeMatch { get; private set; } = string.Empty;
+    public string WeaveCondition { get; private set; } = string.Empty;
+    public string Observation { get; private set; } = string.Empty;
     public string InitialResult { get; private set; } = "Conforming";
     public string RollStatus { get; private set; } = "Available for Cutting";
     public string ShrinkageTest { get; private set; } = "Pending";
@@ -37,7 +43,11 @@ public class FabricInspection : AggregateRoot, IAuditableEntity
         string sample,
         string color = "Navy",
         string initialResult = "Conforming",
-        string rollStatus = "Available for Cutting")
+        string rollStatus = "Available for Cutting",
+        decimal? rollLength = null,
+        string shadeMatch = "",
+        string weaveCondition = "",
+        string observation = "")
     {
         RollId = rollId;
         Supplier = supplier;
@@ -46,12 +56,17 @@ public class FabricInspection : AggregateRoot, IAuditableEntity
         Color = color;
         InitialResult = initialResult;
         RollStatus = rollStatus;
+        RollLength = rollLength;
+        ShadeMatch = shadeMatch;
+        WeaveCondition = weaveCondition;
+        Observation = observation;
         ShrinkageTest = "Pending";
     }
 
     public void UpdateParameters(
-        int fabricWidth,
-        int fabricWeight,
+        decimal fabricWidth,
+        int? fabricWeight,
+        decimal? fabricLength,
         string shadeCondition,
         string weaveCondition,
         string surfaceCondition,
@@ -62,6 +77,7 @@ public class FabricInspection : AggregateRoot, IAuditableEntity
         Parameters = new InspectionParameters(
             fabricWidth,
             fabricWeight,
+            fabricLength,
             shadeCondition,
             weaveCondition,
             surfaceCondition,
@@ -74,6 +90,11 @@ public class FabricInspection : AggregateRoot, IAuditableEntity
             _parameterHistory.Clear();
             _parameterHistory.AddRange(history);
         }
+    }
+
+    public void UpdateRollStatus(string rollStatus)
+    {
+        RollStatus = rollStatus;
     }
 
     public void UpdateShrinkageTest(
@@ -90,7 +111,7 @@ public class FabricInspection : AggregateRoot, IAuditableEntity
 
         if (shrinkageResult.Equals("Non-Compliant", StringComparison.OrdinalIgnoreCase))
         {
-            RollStatus = "Blocked / Under Review";
+            RollStatus = "Blocked";
         }
     }
 }

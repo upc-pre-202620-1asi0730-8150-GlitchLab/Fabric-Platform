@@ -25,6 +25,10 @@ public class FabricInspectionConfiguration : IEntityTypeConfiguration<FabricInsp
         builder.Property(x => x.InspectionDate).IsRequired().HasMaxLength(30);
         builder.Property(x => x.Sample).HasMaxLength(100);
         builder.Property(x => x.Color).HasMaxLength(50);
+        builder.Property(x => x.RollLength).HasPrecision(10, 2);
+        builder.Property(x => x.ShadeMatch).HasMaxLength(50);
+        builder.Property(x => x.WeaveCondition).HasMaxLength(50);
+        builder.Property(x => x.Observation).HasMaxLength(500);
         builder.Property(x => x.InitialResult).HasMaxLength(50);
         builder.Property(x => x.RollStatus).HasMaxLength(50);
         builder.Property(x => x.ShrinkageTest).HasMaxLength(50);

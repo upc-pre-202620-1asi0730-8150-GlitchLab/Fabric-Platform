@@ -22,11 +22,12 @@ public class UpdateFabricInspectionParametersCommandHandler(
                 Error.NotFound("Inspection.NotFound", $"Fabric inspection with ID {command.InspectionId} was not found."));
         }
 
-        if (command.FabricWidth.HasValue && command.FabricWeight.HasValue)
+        if (command.FabricWidth.HasValue)
         {
             inspection.UpdateParameters(
                 command.FabricWidth.Value,
-                command.FabricWeight.Value,
+                command.FabricWeight,
+                command.FabricLength,
                 command.ShadeCondition ?? "Matches approved sample",
                 command.WeaveCondition ?? "No weave defects",
                 command.SurfaceCondition ?? "No stains or damage",

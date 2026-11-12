@@ -21,7 +21,11 @@ public class CreateFabricInspectionCommandHandler(
             command.Sample,
             command.Color,
             command.InitialResult,
-            command.RollStatus);
+            command.RollStatus,
+            command.RollLength,
+            command.ShadeMatch,
+            command.WeaveCondition,
+            command.Observation);
 
         await inspectionRepository.AddAsync(inspection, ct);
         await unitOfWork.CompleteAsync(ct);

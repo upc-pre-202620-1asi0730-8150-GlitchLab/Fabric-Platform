@@ -1,3 +1,3 @@
 namespace FabricPlatform.API.Quality.Application.Internal.Queries;
 
-public record GetAllDefectsQuery;
+public record GetAllDefectsQuery(string? BatchId = null);

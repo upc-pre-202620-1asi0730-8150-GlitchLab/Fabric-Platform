@@ -1,8 +1,9 @@
 namespace FabricPlatform.API.Quality.Domain.Model.ValueObjects;
 
 public record InspectionParameters(
-    int FabricWidth,
-    int FabricWeight,
+    decimal FabricWidth,
+    int? FabricWeight,
+    decimal? FabricLength,
     string ShadeCondition,
     string WeaveCondition,
     string SurfaceCondition,

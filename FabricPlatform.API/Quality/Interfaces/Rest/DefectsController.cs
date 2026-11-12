@@ -21,9 +21,9 @@ public class DefectsController(
     GetAllDefectsQueryHandler getAllHandler) : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> GetAll(CancellationToken ct)
+    public async Task<IActionResult> GetAll([FromQuery] string? batchId, CancellationToken ct)
     {
-        var defects = await getAllHandler.Handle(new GetAllDefectsQuery(), ct);
+        var defects = await getAllHandler.Handle(new GetAllDefectsQuery(batchId), ct);
         return Ok(defects.Select(MapToResponse));
     }
 

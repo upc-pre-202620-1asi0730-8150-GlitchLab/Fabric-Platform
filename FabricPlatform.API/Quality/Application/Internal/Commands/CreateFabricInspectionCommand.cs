@@ -7,4 +7,8 @@ public record CreateFabricInspectionCommand(
     string Sample,
     string Color,
     string InitialResult,
-    string RollStatus);
+    string RollStatus,
+    decimal? RollLength,
+    string ShadeMatch,
+    string WeaveCondition,
+    string Observation);
