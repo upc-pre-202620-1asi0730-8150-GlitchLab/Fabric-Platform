@@ -65,7 +65,7 @@ builder.Services.AddDbContext<AppDbContext>((serviceProvider, options) =>
     if (string.IsNullOrWhiteSpace(connectionString))
         throw new InvalidOperationException("Database connection string is not set in the configuration.");
 
-    options.UseMySQL(connectionString)
+    options.UseNpgsql(connectionString)
         .UseLoggerFactory(serviceProvider.GetRequiredService<ILoggerFactory>())
         .AddInterceptors(serviceProvider.GetRequiredService<DispatchDomainEventsInterceptor>())
         .EnableDetailedErrors();

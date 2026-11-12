@@ -4,6 +4,7 @@ using FabricPlatform.API.Quality.Infrastructure.Persistence.EntityFrameworkCore.
 using FabricPlatform.API.Alerts.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
 using FabricPlatform.API.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
 using FabricPlatform.API.Shared.Infrastructure.Persistence.EntityFrameworkCore.Interceptors;
+using FabricPlatform.API.Shared.Infrastructure.Persistence.EntityFrameworkCore.Converters;
 using Microsoft.EntityFrameworkCore;
 using FabricPlatform.API.Batches.Infrastructure.Persistence.EntityFrameworkCore.Configuration;
 
@@ -19,6 +20,15 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         builder.AddInterceptors(new AuditableEntityInterceptor());
 
         base.OnConfiguring(builder);
+    }
+
+    protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+    {
+        configurationBuilder.Properties<DateTime>()
+            .HaveColumnType("timestamp without time zone")
+            .HaveConversion<UnspecifiedDateTimeConverter>();
+        configurationBuilder.Properties<DateTimeOffset>()
+            .HaveConversion<UtcDateTimeOffsetConverter>();
     }
 
     protected override void OnModelCreating(ModelBuilder builder)
